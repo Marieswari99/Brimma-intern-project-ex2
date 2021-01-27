@@ -1,0 +1,184 @@
+
+<html>
+<head>
+<style>
+h4{
+  color: blue;
+  font-family: verdana;
+  font-size: 100%;
+
+}
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+ padding: 16px 20px;
+  opacity: 0.9;
+} 
+</style>
+<script>
+function Node(value) {
+  this.value = value;
+  this.next = undefined;
+}
+
+function SLinkedList() {
+  var head = undefined;
+  var length = 0;
+
+  return {
+    insert: function(item) {
+      if (!item) return;
+
+      var node = new Node(item);
+
+      if (head) {
+        node.next = head;
+      }
+
+      head = node;
+      length++;
+    },
+    delete: function(value) {
+      var curr = head;
+
+      if (head.value === value) {
+        head = head.next;
+        return;
+      }
+while (curr) {
+        if (curr.next) {
+          var next = curr.next;
+
+          if (next.value === value) {
+            curr.next = next.next;
+            length--;
+            break;
+          }
+        }
+
+        curr = curr.next;
+      }
+    },
+    size: function() {
+      return length;
+    },
+    print: function() {
+      var result = [];
+
+      var curr = head;
+      while (curr) {
+        result.push(curr.value);
+
+        curr = curr.next;
+      }
+
+      return result;
+    }
+  }
+
+}
+
+var demoLinkedList = new SLinkedList();
+
+function perform(type) {
+  var status = document.getElementById('current-status');
+  status.innerHTML = 'Status: Inserting...';
+  var input = document.getElementById('input-field');
+
+  if (input) {
+    var value = input.value;
+
+    var result = demoLinkedList[type](value);
+    input.value = "";
+
+    if (type === 'search') {
+      printSearch(result);
+    }
+  }
+
+  printDetails();
+
+  printStructure();
+
+  status.innerHTML = 'Status: Inserted.'
+}
+function printDetails() {
+  var size = demoLinkedList.size();
+
+  document.getElementById('current-size');
+}
+
+function printStructure() {
+  var structrue = demoLinkedList.print();
+var display = document.getElementById('list-look');
+
+  display.innerHTML = '';
+
+  var DisplayLabel = document.createElement('div');
+  DisplayLabel.innerHTML = 'Linked List: '
+
+  display.appendChild(DisplayLabel);
+
+  for (var i = 0; i < structrue.length; i++) {
+    var item = structrue[i];
+    var div = document.createElement('div');
+    div.innerHTML = item;
+
+    display.appendChild(div);
+  }
+}
+
+
+  
+   
+
+</script>
+</head>
+<body>
+<div>
+<center>
+  <h1>
+  Linked List 
+  </h1>
+</center>
+<h4> Linked List </h4>
+<p>A linked list is a linear data structure, in which the elements are not stored at contiguous memory locations. 
+The elements in a linked list are linked using pointers. </p>
+<h4> Linked List Representation</h4>
+<img src="list.png"height="200" width="280" ><br><br><br>
+<h4>Basic Operations</h5>
+ Following are the basic operations supported by a list.
+<ul><li>Insertion − Adds an element at the beginning of the list.</li>
+
+<li>Deletion − Deletes an element in the list.</li></ul>
+<h4>
+  Linked List Operation 
+  </h4>
+     <div class="Insert">
+      Elements : <input id="input-field" name='insert' placeholder='Enter element value'>
+<br>
+      <button class="btn" onclick="perform('insert')">
+        Insert
+      </button>
+
+      <button  class="btn" onclick="perform('delete')">
+        Delete
+      </button>
+</br>
+    </div>
+    <div class="line">
+
+    </div>
+  </div>
+  <div class="seperate-line"></div>
+  <div class="result line">
+    <div id="current-status" class="line"> </div>
+    <div id="current-size" class="line"></div>
+    <div id="list-look" class="line"></div>
+  </div>
+</div>
+
+</body>
+</html>
